@@ -1,0 +1,29 @@
+{
+  "name": "mixin-helpers",
+  "version": "0.1.0",
+  "description": "Mixin Helpers",
+  "main": "lib/helpers.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NSMeta/mixin-helpers.git"
+  },
+  "directories": {
+    "lib":  "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "author": "Arturas Lebedevas <nsmeta@gmail.com>",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-mocha-test": "~0.7.0",
+    "should": "~2.0.2",
+    "mocha": "~1.13.0"
+  },
+  "dependencies": {
+    "coffee-script": "~1.6.3",
+    "colors": "~0.6.2"
+  }
+}
