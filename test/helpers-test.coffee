@@ -75,7 +75,7 @@ describe 'Utility Helpers', ->
       (systemAccess 'Tsutomu').should.be.true
       (systemAccess 'Kevin').should.eql "MASTER, I AM HERE TO SERVE YOU"
 
-  describe.only '#di() - function dependency injection', ->
+  describe '#di() - function dependency injection', ->
     context =
       Sweet: 'sugar'
       Bitter: 'grapefruit'
