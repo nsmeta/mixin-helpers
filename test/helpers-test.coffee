@@ -1,7 +1,7 @@
 LIB_DIR = "#{__dirname}/../lib"
 
 require 'should'
-{def, predicate} = require "#{LIB_DIR}/helpers.coffee"
+{def, predicate, di} = require "#{LIB_DIR}/helpers.coffee"
 
 # Predefined functions
 greetAndGoodbye = def (name, ret) ->
@@ -75,3 +75,20 @@ describe 'Utility Helpers', ->
       (systemAccess 'Tsutomu').should.be.true
       (systemAccess 'Kevin').should.eql "MASTER, I AM HERE TO SERVE YOU"
 
+  describe.only '#di() - function dependency injection', ->
+    context =
+      Sweet: 'sugar'
+      Bitter: 'grapefruit'
+    targetFn = (Sweet, Bitter) -> [Bitter, Sweet]
+    it 'should call a function with injected dependencies', ->
+      (di context, targetFn).should.eql ['grapefruit', 'sugar']
+
+    it 'should always have $provider in the context', ->
+      $provider = di context, ($provider) -> $provider
+      $provider.should.exist
+
+    describe '$provider.register()', ->
+      it 'should register a module', ->
+        di context, ($provider) ->
+          $provider.register 'Greeting', (name) -> "Hello, #{name}!"
+        (di context, (Greeting) -> Greeting('Kevin')).should.eql 'Hello, Kevin!'

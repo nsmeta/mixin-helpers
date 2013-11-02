@@ -19,6 +19,24 @@ exports.def = (fn) ->
     fn.call(this, arguments..., ret)
     return ret
 
+exports.di = (ctx, fn) ->
+  # Regex stolen from Angular.js =0
+  R_FN_ARGS = /^function\s*[^\(]*\(\s*([^\)]*)\)/m;
+
+  fn_str  = Function.prototype.toString.call fn
+  fn_args = fn_str.match(R_FN_ARGS)[1].split ','
+
+  ctx.$provider =
+    register: (name, module) -> ctx[name] = module
+
+  args = []
+  for arg in fn_args
+    arg = arg.replace /\s*/, ''
+    throw new Error "\"#{arg}\" is not in the DI Context" unless ctx[arg]?
+    args.push ctx[arg]
+
+  fn.apply(null, args)
+
 predicate = ->
   [predicates..., fn] = arguments
 
